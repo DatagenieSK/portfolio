@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sk Alauddin | Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;500;800&display=swap');
+
+        /* Color Palette & Variables */
+        :root {
+            --paper: #E6D8C0;
+            --paper-dark: #D8C9AE;
+            --ink: #1A1C1D;
+            --sage-green: #7CA08E;
+            --terracotta: #D98C6D;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* SVG Noise Texture for Paper Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* --- LOADER STYLES --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--ink);
+            color: var(--sage-green);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 10%;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1.2rem;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .terminal-loader p {
+            margin-bottom: 0.5rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            background-color: var(--sage-green);
+            animation: blink 1s step-end infinite;
+        }
+
+        .cursor.active {
+            background-color: var(--ink);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* --- NAV & GENERAL LAYOUT --- */
+        nav {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--ink);
+            flex-wrap: wrap;
+        }
+
+        nav h1 {
+            font-family: 'Courier Prime', monospace;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--ink);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--sage-green);
+            transition: width var(--transition-speed) ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 4rem 5%;
+            border-bottom: 2px dashed var(--ink);
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Courier Prime', monospace;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            display: inline-block;
+            background-color: var(--ink);
+            color: var(--paper);
+            padding: 0.5rem 1rem;
+            transform: rotate(-1deg);
+            border-radius: 2px 8px 3px 5px;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .section-title:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            gap: 4rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--ink);
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text h2 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            font-family: 'Courier Prime', monospace;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--sage-green);
+            color: var(--paper);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: 2px solid var(--ink);
+            border-radius: 2px 15px 3px 12px; 
+            transition: all var(--transition-speed) ease;
+            box-shadow: 4px 4px 0px var(--ink);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 7px 7px 0px var(--ink);
+            background-color: #6a8c7b;
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background-color: var(--sage-green);
+            z-index: -1;
+            border-radius: 8px 12px 5px 10px;
+            transform: rotate(-3deg);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image:hover::before {
+            transform: rotate(-1deg) scale(1.02);
+        }
+
+        .hero-image img {
+            max-width: 80%;
+            height: auto;
+            border: 3px solid var(--ink);
+            background-color: var(--paper);
+            padding: 10px;
+            box-shadow: 8px 8px 0px var(--ink);
+        }
+
+        /* --- TIMELINE (EXPERIENCE) --- */
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            padding-left: 2.5rem;
+            border-left: 3px solid var(--ink);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -11px;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            background-color: var(--terracotta);
+            border: 2px solid var(--ink);
+            border-radius: 50%;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+            background-color: var(--sage-green);
+        }
+
+        .timeline-date {
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
+            color: var(--terracotta);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-company {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item ul {
+            list-style-type: square;
+            margin-left: 1.5rem;
+        }
+
+        /* --- PROJECTS GRID & CARDS --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            border: 2px solid var(--ink);
+            padding: 2rem;
+            border-radius: 4px 15px 4px 10px;
+            box-shadow: 5px 5px 0px var(--ink);
+            background-color: var(--paper-dark);
+            transition: all var(--transition-speed) ease;
+            opacity: 0;
+            transform: translateY(30px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 8px 8px 0px var(--ink);
+            background-color: #d1c1a3;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Courier Prime', monospace;
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 0.5rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: var(--ink);
+            color: var(--paper);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
+            font-family: 'Courier Prime', monospace;
+            border-radius: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover .tag {
+            transform: translateY(-2px);
+            background-color: var(--sage-green);
+        }
+
+        /* --- SKILLS SECTION --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-badge {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--ink);
+            border-radius: 3px 12px 5px 8px;
+            background-color: var(--paper);
+            box-shadow: 3px 3px 0px var(--ink);
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .skill-badge:hover {
+            transform: translateY(-3px) rotate(2deg);
+            box-shadow: 5px 5px 0px var(--terracotta);
+        }
+
+        /* --- CONTACT FORM --- */
+        .contact-container {
+            max-width: 600px;
+        }
+
+        .comic-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .input-group input, 
+        .input-group textarea {
+            background-color: var(--paper-dark);
+            border: 2px solid var(--ink);
+            padding: 1rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            color: var(--ink);
+            border-radius: 4px 10px 3px 8px;
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.05);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .input-group input:focus, 
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--sage-green);
+            background-color: var(--paper);
+            box-shadow: inset 2px 2px 0px rgba(124, 160, 142, 0.3);
+            transform: translateX(3px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem 5%;
+            border-top: 2px solid var(--ink);
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.9rem;
+            background-color: var(--paper-dark);
+        }
+
+        /* --- SCROLL TO TOP BUTTON --- */
+        #scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--terracotta);
+            color: var(--paper);
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 2px solid var(--ink);
+            border-radius: 5px 12px 8px 4px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--ink);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: all var(--transition-speed) ease;
+            z-index: 999;
+        }
+
+        #scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        #scroll-top:hover {
+            transform: translate(-2px, -2px) scale(1.1);
+            box-shadow: 6px 6px 0px var(--ink);
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            nav ul {
+                justify-content: center;
+                gap: 1.2rem;
+            }
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 2rem;
+            }
+            .hero-text h2 {
+                font-size: 2.8rem;
+            }
+            .hero-image img {
+                max-width: 100%;
+            }
+            .grid {
+                grid-template-columns: 1fr; /* Stack cards on mobile */
+            }
+            #loader {
+                padding-left: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="terminal-loader">
+            <div id="boot-sequence"></div>
+            <span class="cursor">_</span>
+        </div>
+    </div>
+
+    <nav>
+        <h1>Sk Alauddin.</h1>
+        <ul>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Operations, MIS & <br><span class="typewriter"></span><span class="cursor active">_</span></h2>
+            <p>Hardworking professional merging store operations, MIS reporting, and full-stack development to build and optimize scalable enterprise solutions.</p>
+            <a href="#contact" class="btn">Let's Talk</a>
+        </div>
+        <div class="hero-image">
+            <img src="sk.png" alt="Sk Alauddin Illustrated Portrait">
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Field Logs</h2>
+        
+        <div class="timeline-item">
+            <div class="timeline-date">March 2025 - Present</div>
+            <div class="timeline-title">Store Supervisor</div>
+            <div class="timeline-company">BigBasket, India</div>
+            <ul>
+                <li>Created Excel dashboards showing peak order times, revenue, OTR, and in-store processing time.</li>
+                <li>Prepared nightly performance reports to support management decision-making.</li>
+                <li>Analysed daily operational data to maintain store KPIs and improve picking efficiency.</li>
+                <li>Managed manpower allocation, task distribution, and ensured timely dispatching of orders.</li>
+            </ul>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">March 2023 - January 2025</div>
+            <div class="timeline-title">Warehouse Supervisor</div>
+            <div class="timeline-company">Logic Sports, India</div>
+            <ul>
+                <li>Managed order dispatch processes to ensure accuracy and on-time delivery.</li>
+                <li>Oversaw stock replenishment, inventory tracking, and warehouse workflow optimisation.</li>
+                <li>Trained staff in operational procedures and best practices.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Data & Builds</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <h3>Nova Ops</h3>
+                <p><strong>CTO & Co-Founder.</strong> An enterprise event and tech solutions firm. Directed full-stack architectural development to bridge operational gaps with custom, scalable technology.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">React</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Onedot Logistic</h3>
+                <p>A full-stack consignment and logistic transportation platform. Designed a responsive interface for robust operational tracking and seamless client transport management.</p>
+                <div class="tags">
+                    <span class="tag">WordPress</span>
+                    <span class="tag">HTML / CSS</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Blinkit Dashboard</h3>
+                <p>Analysed order trends, revenue patterns, and store performance using advanced data cleaning and processing techniques.</p>
+                <div class="tags">
+                    <span class="tag">Excel</span>
+                    <span class="tag">Pivot Tables</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Netflix Insights</h3>
+                <p>Analysed Netflix viewing trends, ratings, and regional content insights using complex Excel visualisations and series breakdowns.</p>
+                <div class="tags">
+                    <span class="tag">Data Analysis</span>
+                    <span class="tag">Excel</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Arsenal</h2>
+        <div class="skills-container">
+            <div class="skill-badge">MIS Reporting</div>
+            <div class="skill-badge">Data Analysis</div>
+            <div class="skill-badge">Advanced Excel</div>
+            <div class="skill-badge">KPI Tracking</div>
+            <div class="skill-badge">Inventory Control</div>
+            <div class="skill-badge">Python / Flask</div>
+            <div class="skill-badge">HTML / CSS / JS</div>
+            <div class="skill-badge">WordPress</div>
+            <div class="skill-badge">Team Leadership</div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Transmit</h2>
+        <div class="contact-container">
+            <p style="font-family: 'Courier Prime', monospace; font-size: 1.2rem; margin-bottom: 2rem;">Ready to optimize your operations or build something new? Drop a line.</p>
+            <form action="mailto:sk.alauddin100707@gmail.com" method="POST" enctype="text/plain" class="comic-form">
+                <div class="input-group">
+                    <label for="name">Name / Call Sign</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="message">Transmission</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Sk Alauddin. All systems operational.</p>
+    </footer>
+
+    <button id="scroll-top" aria-label="Scroll to top">↑</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. TERMINAL LOADER
+            const loader = document.getElementById('loader');
+            const bootSequence = document.getElementById('boot-sequence');
+            
+            const messages = [
+                "> Booting system...",
+                "> Compiling logistics data...",
+                "> Connecting to Nova Ops servers...",
+                "> Initializing Onedot protocols...",
+                "> Welcome, Sk Alauddin."
+            ];
+
+            let messageIndex = 0;
+
+            function showNextMessage() {
+                if (messageIndex < messages.length) {
+                    const p = document.createElement('p');
+                    p.textContent = messages[messageIndex];
+                    bootSequence.appendChild(p);
+                    messageIndex++;
+                    
+                    setTimeout(showNextMessage, Math.random() * 300 + 150);
+                } else {
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        loader.style.transform = 'translateY(-10px)'; 
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            initHeroTyping(); 
+                        }, 800);
+                    }, 800);
+                }
+            }
+
+            // Start boot sequence
+            setTimeout(showNextMessage, 300);
+
+            // 2. ADVANCED SCROLL REVEAL ANIMATION
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // For sections
+                        if (entry.target.tagName === 'SECTION') {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                        // For timeline items
+                        if (entry.target.classList.contains('timeline-item')) {
+                            entry.target.classList.add('visible');
+                        }
+                        // For project cards
+                        if (entry.target.classList.contains('card')) {
+                            entry.target.classList.add('visible');
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe sections
+            document.querySelectorAll('section').forEach(section => {
+                if(!section.classList.contains('hero')) {
+                    section.style.opacity = '0';
+                    section.style.transform = 'translateY(30px)';
+                    section.style.transition = 'all 0.6s ease-out';
+                    observer.observe(section);
+                }
+            });
+
+            // Observe timeline items individually
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                observer.observe(item);
+            });
+
+            // Observe project cards with staggered delay
+            document.querySelectorAll('.card').forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.15}s`; // Staggered animation
+                observer.observe(card);
+            });
+
+            // 3. HERO TYPING EFFECT
+            const typeWriterElement = document.querySelector('.typewriter');
+            const roles = ["Code.", "CTO.", "Logistics."]; 
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function typeEffect() {
+                const currentRole = roles[roleIndex];
+                
+                if (isDeleting) {
+                    typeWriterElement.textContent = currentRole.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typeWriterElement.textContent = currentRole.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typeSpeed = isDeleting ? 80 : 120;
+
+                if (!isDeleting && charIndex === currentRole.length) {
+                    typeSpeed = 2000; 
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(typeEffect, typeSpeed);
+            }
+
+            function initHeroTyping() {
+                setTimeout(typeEffect, 500); 
+            }
+
+            // 4. SCROLL TO TOP BUTTON LOGIC
+            const scrollTopBtn = document.getElementById('scroll-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
