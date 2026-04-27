@@ -92,7 +92,9 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--ink);
-            flex-wrap: wrap;
+            position: relative;
+            background-color: var(--paper); /* Ensures solid bg over noise */
+            z-index: 1000;
         }
 
         nav h1 {
@@ -100,6 +102,7 @@
             font-size: 1.5rem;
             text-transform: uppercase;
             letter-spacing: -0.5px;
+            z-index: 1001; /* Stays above mobile menu */
         }
 
         nav ul {
@@ -108,7 +111,6 @@
             gap: 2rem;
             font-family: 'Courier Prime', monospace;
             font-weight: bold;
-            flex-wrap: wrap;
         }
 
         nav a {
@@ -131,6 +133,34 @@
 
         nav a:hover::after {
             width: 100%;
+        }
+
+        /* HAMBURGER MENU */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--ink);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hamburger Toggle Animation */
+        .hamburger.toggle span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.toggle span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.toggle span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
         }
 
         section {
@@ -475,30 +505,55 @@
             box-shadow: 6px 6px 0px var(--ink);
         }
 
-        /* --- MOBILE RESPONSIVENESS --- */
+        /* --- MOBILE RESPONSIVENESS (FIXED) --- */
         @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+            /* Navbar Mobile Fix */
+            .hamburger {
+                display: flex;
             }
             nav ul {
-                justify-content: center;
-                gap: 1.2rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--paper);
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                padding: 2rem 0;
+                border-bottom: 2px solid var(--ink);
+                transform: translateY(-150%);
+                opacity: 0;
+                transition: transform 0.4s ease, opacity 0.4s ease;
+                z-index: 999;
+                pointer-events: none;
             }
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+                box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+            }
+
+            /* Hero Section Mobile Fix: Text First, Image Smaller */
             .hero {
-                flex-direction: column-reverse;
+                flex-direction: column; /* This ensures text is on top, image below */
                 text-align: center;
-                gap: 2rem;
+                gap: 3rem;
+                padding-top: 2rem;
             }
             .hero-text h2 {
                 font-size: 2.8rem;
             }
+            .hero-image {
+                width: 100%;
+            }
             .hero-image img {
-                max-width: 100%;
+                max-width: 75%; /* Scales the image down to fit nicely on phones */
+                margin: 0 auto;
             }
             .grid {
-                grid-template-columns: 1fr; /* Stack cards on mobile */
+                grid-template-columns: 1fr; 
             }
             #loader {
                 padding-left: 5%;
@@ -517,7 +572,12 @@
 
     <nav>
         <h1>Sk Alauddin.</h1>
-        <ul>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul id="nav-links">
             <li><a href="#experience">Experience</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -649,6 +709,23 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+            // 0. MOBILE MENU TOGGLE
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('toggle');
+            });
+
+            // Close menu when a link is clicked
+            document.querySelectorAll('#nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('toggle');
+                });
+            });
+
             // 1. TERMINAL LOADER
             const loader = document.getElementById('loader');
             const bootSequence = document.getElementById('boot-sequence');
@@ -695,16 +772,13 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // For sections
                         if (entry.target.tagName === 'SECTION') {
                             entry.target.style.opacity = '1';
                             entry.target.style.transform = 'translateY(0)';
                         }
-                        // For timeline items
                         if (entry.target.classList.contains('timeline-item')) {
                             entry.target.classList.add('visible');
                         }
-                        // For project cards
                         if (entry.target.classList.contains('card')) {
                             entry.target.classList.add('visible');
                         }
@@ -713,7 +787,6 @@
                 });
             }, observerOptions);
 
-            // Observe sections
             document.querySelectorAll('section').forEach(section => {
                 if(!section.classList.contains('hero')) {
                     section.style.opacity = '0';
@@ -723,14 +796,12 @@
                 }
             });
 
-            // Observe timeline items individually
             document.querySelectorAll('.timeline-item').forEach(item => {
                 observer.observe(item);
             });
 
-            // Observe project cards with staggered delay
             document.querySelectorAll('.card').forEach((card, index) => {
-                card.style.transitionDelay = `${index * 0.15}s`; // Staggered animation
+                card.style.transitionDelay = `${index * 0.15}s`; 
                 observer.observe(card);
             });
 
