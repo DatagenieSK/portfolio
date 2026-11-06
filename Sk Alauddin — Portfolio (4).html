@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sk Alauddin — Portfolio</title>
+<style>
+:root{--bg:#f6f3ee;--fg:#151412;--mut:#6d6a63;--card:#fff;--line:#e2ddd2;--chip:#efe9dd;--nav:rgba(246,243,238,.82);--glow:rgba(232,98,12,.13);--acc:#e8620c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#050505;--fg:#f4f1ea;--mut:#8c8a85;--card:#0e0e0e;--line:#222;--chip:#1a1a1a;--nav:rgba(5,5,5,.8);--glow:rgba(255,138,61,.12);--acc:#ff8a3d}}
+:root[data-theme="dark"]{--bg:#050505;--fg:#f4f1ea;--mut:#8c8a85;--card:#0e0e0e;--line:#222;--chip:#1a1a1a;--nav:rgba(5,5,5,.8);--glow:rgba(255,138,61,.12);--acc:#ff8a3d}
+html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;transition:background .3s,color .3s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.glow{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(520px circle at var(--cx,50%) var(--cy,25%),var(--glow),transparent 60%)}
+#root{position:relative;z-index:1}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--nav);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nin{max-width:1060px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.04em;color:var(--fg);text-decoration:none}
+nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0;align-items:center}
+nav li a{display:block;padding:7px 12px;border-radius:99px;font-size:14px;color:var(--mut);text-decoration:none;transition:.2s}
+nav li a:hover{color:var(--fg)}nav li a.on{color:var(--fg);background:var(--chip)}
+.tg{border:1px solid var(--line);background:none;color:var(--fg);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px}
+.bar{height:2px;background:var(--acc);width:0;transition:width .1s}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:48px 0 40px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);border:1px solid var(--line);padding:6px 12px;border-radius:99px}
+.badge i{width:7px;height:7px;border-radius:50%;background:#34c759;box-shadow:0 0 10px #34c759;animation:p 2s infinite}
+@keyframes p{50%{opacity:.35}}
+h1{font-size:clamp(34px,7vw,64px);font-weight:700;margin:20px 0 10px;letter-spacing:-.04em;line-height:1.05}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--acc),#ff6fa1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);font-size:clamp(15px,2vw,18px);margin:0 auto;max-width:560px;line-height:1.55}
+.stage{perspective:1400px;margin:44px auto 0;width:min(560px,92vw)}
+.dev{transform:rotateX(18deg) rotateY(-12deg);transform-style:preserve-3d;transition:transform .15s ease-out;filter:drop-shadow(0 50px 50px var(--glow))}
+.lid,.base{background:linear-gradient(145deg,#8d8d8d,#3a3a3a 45%,#757575);padding:12px;position:relative;box-shadow:inset 0 2px 2px rgba(255,255,255,.55),inset 0 -3px 6px rgba(0,0,0,.6)}
+.lid{border-radius:26px 26px 14px 14px}.base{border-radius:14px 14px 26px 26px;padding:16px 14px 10px}
+.hinge{height:20px;width:70px;margin:-2px auto;border-radius:4px;position:relative;z-index:2;background:repeating-linear-gradient(90deg,#d9822f 0 4px,#7a3d10 4px 6px);box-shadow:0 2px 6px #000}
+.screw{position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ddd,#555);box-shadow:0 1px 2px #000}
+.lcd{background:linear-gradient(180deg,#0d0d0c,#1b1a17);border-radius:12px;padding:16px 18px 14px;min-height:104px;text-align:left;box-shadow:inset 0 4px 14px #000,inset 0 0 0 2px #2b2b2b;font-family:"Courier New",ui-monospace,monospace;position:relative;overflow:hidden}
+.lcd:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px);pointer-events:none}
+.meta{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.14em;color:#a8731f}
+.type{font-size:clamp(20px,4.6vw,28px);font-weight:700;color:#f3e7c7;margin:14px 0 6px;min-height:1.3em;text-shadow:0 0 8px rgba(255,200,100,.35)}
+.type b{display:inline-block;width:3px;height:1em;background:#ff8a3d;vertical-align:-3px;margin-left:3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.cap{font-size:10px;color:#777}
+.row{display:flex;gap:8px;margin-bottom:12px}
+.key{flex:1;aspect-ratio:1/.92;border:0;border-radius:10px;font:800 clamp(15px,3.6vw,22px)/1 Inter,system-ui,sans-serif;color:#2a1608;cursor:pointer;background:linear-gradient(180deg,var(--k1),var(--k2));box-shadow:0 6px 0 var(--k3),0 9px 10px rgba(0,0,0,.5),inset 0 2px 2px rgba(255,255,255,.45);transition:transform .08s,box-shadow .08s}
+.key.dn,.key:active{transform:translateY(5px);box-shadow:0 1px 0 var(--k3),0 3px 4px rgba(0,0,0,.5),inset 0 2px 2px rgba(255,255,255,.3)}
+.o{--k1:#ff8a2a;--k2:#e8620c;--k3:#8a3706}.c{--k1:#fff1d6;--k2:#e8d6b0;--k3:#8f7c52}.g{--k1:#3f8a3a;--k2:#2c6a2a;--k3:#143a14;color:#d8ffd0}.l{--k1:#a8e63a;--k2:#7bc21a;--k3:#3f6a0a}
+.p{--k1:#f1a6d4;--k2:#d97cb4;--k3:#7a3a62}.r{--k1:#a2290f;--k2:#7a1c08;--k3:#3a0c03;color:#ffb89a}.y{--k1:#ffb52e;--k2:#e68f0c;--k3:#8a5206}.k{--k1:#3a3a3a;--k2:#232323;--k3:#0a0a0a;color:#ddd}
+.wide{flex:2.1;aspect-ratio:auto}
+.hint{margin-top:26px;color:var(--mut);font-size:11px;letter-spacing:.14em}
+.cta{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.btn{padding:12px 22px;border-radius:99px;font:600 14px Inter,system-ui,sans-serif;text-decoration:none;border:1px solid var(--line);color:var(--fg);background:none;cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--acc);transform:translateY(-2px)}.btn.f{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.mq{overflow:hidden;border-block:1px solid var(--line);margin:30px 0 0;padding:16px 0;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.mt{display:flex;gap:44px;width:max-content;animation:mq 32s linear infinite;color:var(--mut);font-weight:600;font-size:15px}
+@keyframes mq{to{transform:translateX(-50%)}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;padding-top:56px}
+.stat{border:1px solid var(--line);border-radius:16px;padding:20px;background:var(--card)}
+.stat b{display:block;font-size:44px;line-height:1.1;letter-spacing:-.04em;margin-bottom:6px}.stat>span{color:var(--mut);font-size:13px}
+.sec{padding-top:88px}
+.sec h2{font-size:12px;letter-spacing:.22em;color:var(--acc);text-transform:uppercase;margin:0 0 18px}
+.lead{font-size:clamp(20px,3vw,30px);line-height:1.4;letter-spacing:-.02em;max-width:820px;margin:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tab{border:1px solid var(--line);background:none;color:var(--mut);padding:8px 16px;border-radius:99px;font:600 13px Inter,system-ui,sans-serif;cursor:pointer;transition:.2s}
+.tab.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}.tab sup{opacity:.6;margin-left:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.card{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--fg);text-decoration:none;overflow:hidden;animation:pop .45s both;transition:border-color .2s,transform .2s}
+.card:before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .25s;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 70%)}
+a.card:hover,.card:hover{border-color:var(--acc);transform:translateY(-4px)}.card:hover:before{opacity:1}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}}
+.card>*{position:relative}.cat{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.card h3{margin:0;font-size:19px;letter-spacing:-.02em}.card p{margin:0;color:var(--mut);font-size:14px;line-height:1.6;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{font-size:11px;padding:4px 10px;border-radius:99px;background:var(--chip);color:var(--mut)}
+.go{font-size:13px;font-weight:600;color:var(--acc)}
+.sk{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.sk div{border-top:1px solid var(--line);padding-top:14px}.sk h3{margin:0 0 8px;font-size:15px}.sk p{margin:0;color:var(--mut);font-size:14px;line-height:1.65}
+.ct{margin:26px 0 0;padding-left:18px;color:var(--mut);font-size:14px;line-height:1.9}
+.big{font-size:clamp(34px,7vw,72px);letter-spacing:-.04em;line-height:1.05;margin:0 0 28px;font-weight:700}
+.ft{text-align:center;color:var(--mut);font-size:12px;padding:70px 0 40px}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+.ldr{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .5s,visibility .5s}.ldr.out{opacity:0;visibility:hidden}
+.ldr .lg{font-size:60px;font-weight:800;letter-spacing:-.05em}.ldr .lg i{color:var(--acc);font-style:normal}
+.ldr .keys{display:flex;gap:6px}.ldr .keys span{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--chip);color:var(--mut);border:1px solid var(--line);transition:.2s}
+.ldr .keys span.lit{background:var(--acc);border-color:var(--acc);color:#fff;transform:translateY(3px)}
+.ldr .trk{width:min(240px,60vw);height:3px;background:var(--line);border-radius:3px;overflow:hidden}.ldr .trk b{display:block;height:100%;background:var(--acc)}
+.ldr small{color:var(--mut);font-size:11px;letter-spacing:.16em}
+@media(max-width:600px){nav li:nth-child(n+3){display:none}.nin{padding:12px 16px}.wrap{padding:0 16px}}
+@media(prefers-reduced-motion:reduce){.rv,.card,.dev,.key,.mt{transition:none;animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div id="boot" style="position:fixed;inset:0;display:grid;place-items:center;background:#050505;color:#ff8a3d;font:800 48px system-ui,sans-serif;letter-spacing:-.05em;z-index:99">sk.</div>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js"></script>
+<script>
+const {useState,useEffect,useRef}=React;const html=htm.bind(React.createElement);
+const EM="sk.alauddin100707@gmail.com";
+const PR=[
+{t:"NovaOps",b:"Venture",c:"Web",d:"CTO and co-founder. Event technology, including a registration and check-in platform with an admin dashboard, paid registration, ID card PDFs, QR-based attendance, data exports and activity and meal tracking.",g:["Flask","Razorpay","QR check-in"],u:"https://novaops.in",l:"Visit novaops.in"},
+{t:"Blinkit Dashboard",c:"Data",d:"Cleaned order data and built PivotTables, slicers and PivotCharts to analyze order trends, revenue patterns and store performance.",g:["Advanced Excel","PivotTables","Slicers"]},
+{t:"Vrinda Store Sales Report 2022",c:"Data",d:"Cleaned a full year of retail sales data and built an interactive dashboard that surfaces sales trends.",g:["Advanced Excel","Dashboard"],u:"https://github.com/DatagenieSK/Vrinda_Store_Annual_Sales_Report_2022",l:"View on GitHub"},
+{t:"Madhav Store Sales Dashboard",c:"Data",d:"End-to-end Power BI dashboard: raw CSV sales data cleaned with Power Query, modeled, and explored through slicers, bar and donut charts.",g:["Power BI","Power Query"],u:"https://github.com/DatagenieSK/Madhav_Store_Ecommerce_Sales_Dashboard",l:"View on GitHub"},
+{t:"Relational Database Capstone",c:"Data",d:"Designed and built a relational schema for the AlmaBetter data analytics capstone, applying normalization and query design.",g:["SQL","Database design"]},
+{t:"Diwali Sales Data Analysis",c:"Data",d:"Exploratory analysis of Diwali sales data in a Jupyter notebook, covering buyer patterns by gender, age group, state and occupation. Key findings: most buyers are women aged 26–35, and Food is the top revenue category.",g:["Python","pandas","Matplotlib","Seaborn"],u:"https://github.com/DatagenieSK/Diwali_sales_data_anlysis",l:"View on GitHub"},
+{t:"Music Store Data Analysis",c:"Data",d:"SQL queries that analyze a music store database to answer business questions about the data.",g:["SQL","Database analysis"],u:"https://github.com/DatagenieSK/SQl-Projects",l:"View on GitHub"},
+{t:"OneDot Logistics",c:"Web",d:"Official website for a logistics company, showcasing its services with testimonials and an easy-to-navigate layout.",g:["WordPress","PHP","MySQL","JavaScript"],u:"https://onedot.live/",l:"Visit site"},
+{t:"Drala",c:"Web",d:"Private blockchain platform for exclusive cryptocurrency use in closed spaces such as churches, built for secure, confidential transactions.",g:["React","Node.js","MongoDB","Ethereum"],u:"https://drala.io/",l:"Visit site"},
+{t:"Innovacio Technologies",c:"Web",d:"Company website presenting web, mobile and AI/ML projects, from predictive analytics to natural language processing.",g:["React","Node.js","Express","MySQL"],u:"https://www.innovaciotech.com/",l:"Visit site"},
+{t:"DecoSquare India",c:"Web",d:"Website for an interior design company covering modular kitchens, wardrobes, home automation and a project portfolio.",g:["HTML","CSS","JavaScript","jQuery"],u:"https://decosquareindia.com/",l:"Visit site"},
+{t:"Jarvis Voice Assistant",c:"AI & Python",d:"Voice-controlled assistant that answers questions with a local Llama 2 model, opens apps, reads the news, searches the web and sets alarms, with wake and sleep commands.",g:["Python","Ollama","Llama 2","Speech recognition"],u:"https://github.com/DatagenieSK/Jarvis-with-AI",l:"View on GitHub"},
+{t:"Python Projects",c:"AI & Python",d:"A collection of my Python projects and practice work.",g:["Python"],u:"https://github.com/DatagenieSK/Python-Projects",l:"View on GitHub"},
+{t:"Medicine Stockist",c:"Android",d:"Pharmacy management app with inventory, sales tracking, expiry alerts, advanced medicine search and a metrics dashboard.",g:["Java","Android","PHP","MySQL"],u:"https://play.google.com/store/apps/details?id=com.sts.medicinestockmanagement",l:"View on Google Play"},
+{t:"Nashbud",c:"Android",d:"Interest-based social app with “Flicks”, short-lived moments with real-time reactions and timers for content disappearance.",g:["Java","Node.js","MongoDB","Firebase"],u:"https://play.google.com/store/apps/details?id=com.NashBud3.nashbud",l:"View on Google Play"},
+{t:"Catalog Maker",c:"Android",d:"Tool for designing product catalogs, adding product details and customizing layouts, then sharing them.",g:["Java","Kotlin","PHP","Firebase"],u:"https://play.google.com/store/apps/details?id=com.asharinfotech.catalogmaker",l:"View on Google Play"},
+{t:"NioPractice: JEE Math",c:"Android",d:"AI-driven practice app for JEE aspirants that adapts to each student’s pace to build speed and accuracy in Mathematics.",g:["Java","PHP","MySQL","Firebase"],u:"https://play.google.com/store/apps/details?id=com.niopractice.prodMob",l:"View on Google Play"}];
+const SK=[["Advanced Excel","PivotTables & PivotCharts, Slicers, Dashboards, VLOOKUP/XLOOKUP, Conditional Formatting, Data Cleaning, Data Validation"],["BI & SQL","Power BI (Power Query, DAX basics), Basic SQL (HackerRank certified)"],["Programming","Python (pandas, OOP fundamentals), Java, PHP, JavaScript"],["Analytics","Data cleaning & transformation, KPI & trend analysis, data visualization, relational database design"],["Domain","Retail & e-commerce operations, inventory analytics, sales reporting, stock variance analysis"],["Languages","English, Hindi, Marwari (speak)"]];
+const CE=["Applied Statistics Interview Grind — AlmaBetter (Jan 2025)","Capstone Project: Relational Database — AlmaBetter (Dec 2024)","Microsoft Excel Fundamentals — Udemy (2024)","CodeStorm Challenge: Intro to Computer Programming — AlmaBetter (Apr 2024)","Skill Mastery Challenge: Object-Oriented Programming — AlmaBetter (Apr 2024)","Introduction to Python — AlmaBetter (Mar 2024)","SQL (Basic) — HackerRank (Oct 2023)"];
+const TECH=["Excel","Power BI","SQL","Python","React","Node.js","Flask","Java","Kotlin","PHP","MySQL","MongoDB","Firebase","WordPress"];
+const PH=[["Sk’s portfolio","Data analyst, web and app builder"],["Selected Work","Dashboards, websites and apps"],["About Me","Turning data into decisions"],["My Apps","Android apps on Google Play"],["Start a project","Let’s build something sharp"],["Say Hello",EM]];
+const KEYS=[[["P","o"],["O","o"],["R","c"],["T","g"],["F","l"]],[["O","p"],["L","r"],["I","y"],["O","o"],["+","p"],["↵","k wide"]]];
+
+function useIn(){const r=useRef(),[v,s]=useState(false);useEffect(()=>{const o=new IntersectionObserver(([e])=>{if(e.isIntersecting){s(true);o.disconnect()}},{threshold:.15});o.observe(r.current);return()=>o.disconnect()},[]);return[r,v]}
+function Rev({children,d=0}){const[r,v]=useIn();return html`<div ref=${r} class=${"rv"+(v?" in":"")} style=${{transitionDelay:d+"ms"}}>${children}</div>`}
+function Count({to,suf=""}){const[r,v]=useIn(),[n,s]=useState(0);useEffect(()=>{if(!v)return;let t0;const f=t=>{t0=t0||t;const p=Math.min((t-t0)/1200,1);s(Math.round(to*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},[v]);return html`<span ref=${r}>${n}${suf}</span>`}
+
+function Device(){
+const[txt,setTxt]=useState(""),[cap,setCap]=useState(PH[0][1]),[dn,setDn]=useState([]),api=useRef({}),dev=useRef();
+useEffect(()=>{let tm,alive=true,i=0;
+const run=(s,c,after)=>{clearTimeout(tm);setCap(c);let n=0;const step=()=>{if(!alive)return;setTxt(s.slice(0,n++));if(n<=s.length)tm=setTimeout(step,55);else if(after)tm=setTimeout(after,2200)};step()};
+const cyc=()=>{const p=PH[i++%PH.length];run(p[0],p[1],cyc)};api.current={run,cyc};cyc();
+const press=ids=>{setDn(ids);setTimeout(()=>setDn([]),130)};
+const kd=e=>{const c=e.key.length===1?e.key.toUpperCase():e.key==="Enter"?"↵":"";if(!c||e.metaKey||e.ctrlKey)return;const ids=[];KEYS.forEach((r,ri)=>r.forEach((k,ci)=>{if(k[0]===c)ids.push(ri+"-"+ci)}));if(ids.length)press(ids)};
+const mv=e=>{if(!dev.current||matchMedia("(prefers-reduced-motion:reduce)").matches)return;const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;dev.current.style.transform="rotateX("+(18-y*10)+"deg) rotateY("+(-12+x*16)+"deg)"};
+addEventListener("keydown",kd);addEventListener("pointermove",mv);api.current.press=press;
+return()=>{alive=false;clearTimeout(tm);removeEventListener("keydown",kd);removeEventListener("pointermove",mv)}},[]);
+const click=(l,id)=>{api.current.press([id]);api.current.run(l==="↵"?"Hello!":"Key: "+l,l==="↵"?"Thanks for stopping by":"Typed on the keypad",api.current.cyc)};
+return html`<div class="stage"><div class="dev" ref=${dev}>
+<div class="lid">${[{left:10,top:10},{right:10,top:10},{left:10,bottom:10},{right:10,bottom:10}].map((s,i)=>html`<i class="screw" key=${i} style=${s}></i>`)}
+<div class="lcd"><div class="meta"><span>SK / CREATIVE INDEX</span><span>EXPLORE</span></div><div class="type">${txt}<b></b></div><div class="cap">${cap}</div></div></div>
+<div class="hinge"></div>
+<div class="base">${KEYS.map((row,ri)=>html`<div class="row">${row.map(([l,c],ci)=>{const id=ri+"-"+ci;return html`<button class=${"key "+c+(dn.includes(id)?" dn":"")} aria-label=${"Key "+l} onClick=${()=>click(l,id)}>${l}</button>`})}</div>`)}</div>
+</div></div>`}
+
+function Card({p,i}){
+const mv=e=>{const r=e.currentTarget.getBoundingClientRect();e.currentTarget.style.setProperty("--mx",e.clientX-r.left+"px");e.currentTarget.style.setProperty("--my",e.clientY-r.top+"px")};
+const inner=[html`<span class="cat">${p.c}${p.b?" · "+p.b:""}</span>`,html`<h3>${p.t}</h3>`,html`<p>${p.d}</p>`,html`<div class="tags">${p.g.map(x=>html`<span>${x}</span>`)}</div>`,p.u&&html`<span class="go">${p.l} →</span>`];
+const st={animationDelay:i*45+"ms"};
+return p.u?html`<a class="card" href=${p.u} target="_blank" rel="noopener" onMouseMove=${mv} style=${st}>${inner}</a>`:html`<div class="card" onMouseMove=${mv} style=${st}>${inner}</div>`}
+
+class EB extends React.Component{constructor(p){super(p);this.state={e:null}}static getDerivedStateFromError(e){return{e}}render(){return this.state.e?html`<pre style=${{padding:20,color:"#ff8a3d",whiteSpace:"pre-wrap"}}>Something went wrong: ${String(this.state.e)}</pre>`:this.props.children}}
+function Loader({p,out}){return html`<div class=${"ldr"+(out?" out":"")} role="status" aria-label="Loading"><div class="lg">sk<i>.</i></div><div class="keys">${"PORTFOLIO".split("").map((c,i)=>html`<span key=${i} class=${p>=(i+1)*11?"lit":""}>${c}</span>`)}</div><div class="trk"><b style=${{width:p+"%"}}></b></div><small>LOADING · ${p}%</small></div>`}
+
+function App(){
+const[ld,setLd]=useState(0),[pc,setPc]=useState(0),[theme,setTheme]=useState(null),[act,setAct]=useState("about"),[prog,setProg]=useState(0),[f,setF]=useState("All"),[cp,setCp]=useState(false);
+const NAV=[["about","About"],["work","Work"],["skills","Skills"],["contact","Contact"]];
+useEffect(()=>{const b=document.getElementById("boot");if(b)b.remove();document.body.style.overflow="hidden";const t0=performance.now();let raf;const f=t=>{const p=Math.min((t-t0)/1500,1);setPc(Math.round((1-Math.pow(1-p,2))*100));if(p<1)raf=requestAnimationFrame(f);else{setLd(1);setTimeout(()=>{setLd(2);document.body.style.overflow=""},500)}};raf=requestAnimationFrame(f);return()=>cancelAnimationFrame(raf)},[]);
+useEffect(()=>{const sc=()=>{const h=document.documentElement;setProg(scrollY/(h.scrollHeight-innerHeight)*100);let a="about";NAV.forEach(([id])=>{const e=document.getElementById(id);if(e&&e.getBoundingClientRect().top<innerHeight*.4)a=id});setAct(scrollY<300?"":a)};
+const pm=e=>{const s=document.documentElement.style;s.setProperty("--cx",e.clientX+"px");s.setProperty("--cy",e.clientY+"px")};
+addEventListener("scroll",sc,{passive:true});addEventListener("pointermove",pm);sc();return()=>{removeEventListener("scroll",sc);removeEventListener("pointermove",pm)}},[]);
+const flip=()=>{const cur=theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");const n=cur==="dark"?"light":"dark";setTheme(n);document.documentElement.setAttribute("data-theme",n)};
+const copy=async()=>{try{await navigator.clipboard.writeText(EM);setCp(true);setTimeout(()=>setCp(false),1800)}catch(e){location.href="mailto:"+EM}};
+const tabs=["All","Data","Web","Android","AI & Python"],list=PR.filter(p=>f==="All"||p.c===f);
+return html`<div>
+${ld<2&&html`<${Loader} p=${pc} out=${ld===1}/>`}
+<nav><div class="nin"><a class="logo" href="#top">sk.</a><ul>${NAV.map(([id,l])=>html`<li><a href=${"#"+id} class=${act===id?"on":""}>${l}</a></li>`)}<li><button class="tg" onClick=${flip} aria-label="Toggle theme">◐</button></li></ul></div><div class="bar" style=${{width:prog+"%"}}></div></nav>
+<main class="wrap" id="top">
+<section class="hero"><div class="badge"><i></i>Available for work</div>
+<h1>Hi, I’m <em>Sk Alauddin</em></h1>
+<p class="sub">CTO & co-founder at NovaOps, plus data analyst and web & app builder from Kolkata.</p>
+<${Device}/>
+<div class="hint">TAP THE KEYS · OR JUST TYPE</div>
+<div class="cta"><a class="btn f" href=${"mailto:"+EM}>Start a project</a><a class="btn" href="#work">See my work</a></div></section>
+<div class="mq"><div class="mt">${[...TECH,...TECH].map((t,i)=>html`<span key=${i}>${t}</span>`)}</div></div>
+<div class="stats">${[[43,"","GitHub repositories"],[9,"","Web & app builds"],[6,"","Data projects"],[7,"","Certifications"]].map(([n,s,l],i)=>html`<${Rev} d=${i*80}><div class="stat"><b><${Count} to=${n} suf=${s}/></b><span>${l}</span></div><//>`)}</div>
+<section class="sec" id="about"><${Rev}><h2>About</h2><p class="lead">Data analyst who turns raw sales and inventory data into clear decisions. I build Advanced Excel and Power BI dashboards, clean raw data with Power Query and write basic SQL. I also build websites and Android apps, and I’m CTO and co-founder of NovaOps.</p><//></section>
+<section class="sec" id="work"><h2>Selected work</h2>
+<div class="tabs">${tabs.map(t=>html`<button class=${"tab"+(f===t?" on":"")} onClick=${()=>setF(t)}>${t}<sup>${t==="All"?PR.length:PR.filter(p=>p.c===t).length}</sup></button>`)}</div>
+<div class="grid" key=${f}>${list.map((p,i)=>html`<${Card} p=${p} i=${i} key=${p.t}/>`)}</div></section>
+<section class="sec" id="skills"><${Rev}><h2>Skills</h2><div class="sk">${SK.map(([h,t])=>html`<div><h3>${h}</h3><p>${t}</p></div>`)}</div><ul class="ct">${CE.map(c=>html`<li>${c}</li>`)}</ul><//></section>
+<section class="sec" id="contact"><${Rev}><h2>Contact</h2><p class="big">Let’s build something sharp.</p>
+<div class="cta" style=${{justifyContent:"flex-start"}}><a class="btn f" href=${"mailto:"+EM}>Email me</a><button class="btn" onClick=${copy}>${cp?"Copied ✓":"Copy email"}</button><a class="btn" href="https://github.com/DatagenieSK" target="_blank" rel="noopener">GitHub</a><a class="btn" href="https://novaops.in" target="_blank" rel="noopener">NovaOps</a></div><//></section>
+<div class="ft">© 2026 Sk Alauddin · Kolkata, India</div>
+</main></div>`}
+ReactDOM.createRoot(document.getElementById("root")).render(html`<${EB}><${App}/><//>`);
+</script>
+</body>
+</html>
